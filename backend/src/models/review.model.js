@@ -17,6 +17,10 @@ const reviewSchema = new mongoose.Schema({
     {
         type: String
     },
+    learningReflection: {
+        type: String,
+        required: true
+    },
     datePosted: {
         type: String
     }

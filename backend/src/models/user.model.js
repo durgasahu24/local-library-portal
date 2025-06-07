@@ -9,15 +9,18 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        unique: true,
+        required: true,
     },
     password: {
         type: String,
         required: true,
-        minlengh: 5
+        minlength: 5
     },
     readerLevel: {
-        type: String
+        type: String,
+        enum: ['Beginner', 'Intermediate', 'Advanced'],
+        required: true
     },
     borrowedBooks: [borrowedBooksSchema]
 
