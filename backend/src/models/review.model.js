@@ -11,11 +11,13 @@ const reviewSchema = new mongoose.Schema({
         ref: 'Book'
     },
     rating: {
-        type: Number
+        type: Number,
+        required: true
     },
     review:
     {
-        type: String
+        type: String,
+        required: true
     },
     learningReflection: {
         type: String,

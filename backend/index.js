@@ -5,7 +5,8 @@ import dotenv from "dotenv"
 dotenv.config()
 import connectDB from "./src/db/connectDb.js";
 import authRoutes from './src/routes/auth.route.js'
-
+import bookRoutes from './src/routes/book.route.js'
+import reviewRoutes from './src/routes/review.route.js'
 
 const app = express();
 
@@ -22,10 +23,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-app.use('/api/auth', authRoutes)
-
-
-
+app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/book', bookRoutes)
+app.use('/api/v1/review', reviewRoutes)
 
 
 
