@@ -92,7 +92,20 @@ const loginUser = async (req, res) => {
 
 
 
+const logout = (req, res) => {
+    try {
+
+        return res.status(200).cookie("token", { maxAge: 0 }).json({ message: "user logout successfully" })
+
+    } catch (error) {
+        return res.status(500).json({ message: "server error ", success: false, error: error.message })
+    }
+}
+
+
+
 export default {
     registerUser,
-    loginUser
+    loginUser,
+    logout
 }

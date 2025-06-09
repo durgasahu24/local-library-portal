@@ -24,7 +24,7 @@ const getBookById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const book = await Book.findById(id);
+        const book = await Book.findById(id).populate("reviews");
 
         if (!book) {
             return res.status(404).json({ message: "Book not found" });
@@ -131,35 +131,36 @@ const getBorrowedBooks = async (req, res) => {
 };
 
 
+
 const filterBooks = async (req, res) => {
+  try {
+    let { genre, author, rating } = req.query;
+    const filter = {};
 
-    try {
-        
-        const { genre, author, minRating } = req.query;
-        const filter = {};
-
-        if (genre) {
-            filter.genre = genre;
-        }
-
-        if (author) {
-            filter.author = { $regex: author, $options: 'i' };
-        }
-
-        if (minRating) {
-            filter.rating = { $gte: Number(minRating) };
-        }
-
-        const books = await Book.find(filter);
-
-        res.status(200).json(books);
-
-    } catch (error) {
-        console.error('error in filterBooks:', error);
-        res.status(500).json({ message: 'Server error' });
+    // Convert genre and author to arrays if they are not already
+    if (genre) {
+      genre = Array.isArray(genre) ? genre : genre.split(",");
+      filter.genre = { $in: genre };
     }
 
+    if (author) {
+      author = Array.isArray(author) ? author : author.split(",");
+      filter.author = { $in: author };
+    }
+
+    if (rating) {
+      filter.rating = { $gte: Number(rating) };
+    }
+
+    const books = await Book.find(filter);
+
+    res.status(200).json({ books });
+  } catch (error) {
+    console.error("Error in filterBooks:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
+
 
 
 

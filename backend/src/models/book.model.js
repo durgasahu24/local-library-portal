@@ -14,9 +14,11 @@ const bookSchema = new mongoose.Schema({
     genreCode: {
         type: String
     },
-    rating: {
-        type: Number
-    },
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review'
+    }]
+    ,
     available: {
         type: Boolean,
         default: true // book  avilable for borrow if true
